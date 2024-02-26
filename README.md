@@ -5,5 +5,4 @@
 ### GitHub Actions:
 [![GitHub Actions](https://github.com/maxtiish/java-project-71/actions/workflows/main.yml/badge.svg?event=push)](https://github.com/maxtiish/java-project-72/actions/workflows/main.yml)
 
-## 
-[!Website](https://java-project-72-wxf7.onrender.com/)
+[Website link](https://java-project-72-wxf7.onrender.com/)
