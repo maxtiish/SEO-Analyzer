@@ -17,7 +17,7 @@ jobs:
           build-root-directory: app
           gradle-version: 8.2
       - name: Publish code coverage
-        uses: paambaati/codeclimate-action@v3.2.0
+        uses: paambaati/codeclimate-action@v2.5.0
         env:
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
           JACOCO_SOURCE_PATH: "${{github.workspace}}/app/src/main/java"
