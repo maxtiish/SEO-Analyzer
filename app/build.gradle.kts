@@ -19,7 +19,7 @@ application {
 
 dependencies {
     implementation("org.postgresql:postgresql:42.5.4")
-    implementation("gg.jte:jte:3.1.0")
+    implementation("gg.jte:jte:3.1.9")
     implementation("com.h2database:h2:2.2.222")
     implementation("io.javalin:javalin:5.6.2")
     implementation("io.javalin:javalin-bundle:5.6.2")
