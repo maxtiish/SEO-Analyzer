@@ -1,4 +1,8 @@
-<html lang="en">
+@import hexlet.code.dto.BasePage
+
+@param BasePage page
+
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -12,7 +16,12 @@
 <div class="mx-auto p-4 py-md-5">
     <main>
         <h1> Hello, world!</h1>
+        <div>
+            <input id="url-input" autofocus type="text" required name="url"
+                   aria-label="url" class="form-control w-100" placeholder="cсылка"
+                   autocomplete="off">
+            <label for="url-input">Ссылка</label>
+        </div>
     </main>
 </div>
 </body>
-</html>
