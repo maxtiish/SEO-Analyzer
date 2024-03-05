@@ -28,11 +28,6 @@ public class App {
         return Integer.valueOf(port);
     }
 
-    public static void main(String[] args) throws SQLException, IOException {
-        var app = getApp();
-        app.start(getPort());
-    }
-
     public static String readResourceFile(String filename) throws IOException {
         InputStream inputStream = App.class.getClassLoader().getResourceAsStream(filename);
         if (inputStream == null) {
@@ -54,6 +49,12 @@ public class App {
         TemplateEngine templateEngine = TemplateEngine.create(codeResolver, ContentType.Html);
         return templateEngine;
     }
+
+    public static void main(String[] args) throws SQLException, IOException {
+        var app = getApp();
+        app.start(getPort());
+    }
+
     public static Javalin getApp() throws IOException, SQLException {
         var hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(System.getenv().getOrDefault("JDBC_DATABASE_URL",
