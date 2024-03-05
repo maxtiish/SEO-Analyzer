@@ -1,6 +1,7 @@
 package hexlet.code;
 
 import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import hexlet.code.controller.UrlController;
 import hexlet.code.repository.BaseRepository;
 import io.javalin.Javalin;
@@ -60,6 +61,7 @@ public class App {
         hikariConfig.setJdbcUrl(System.getenv().getOrDefault("JDBC_DATABASE_URL",
                 "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;"));
 
+        var dataSource = new HikariDataSource(hikariConfig);
         var sql = readResourceFile("schema.sql");
 
         try (var connection = dataSource.getConnection();
