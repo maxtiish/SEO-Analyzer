@@ -4,8 +4,18 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+# Ignore Gradle build output directory
+build
+
+*.class
+jte-classes
+*.settings
+.factorypath
+bin
+.classpath
+
 ### IntelliJ IDEA ###
-.idea/
+../.idea/
 .idea
 .idea/modules.xml
 .idea/jarRepositories.xml

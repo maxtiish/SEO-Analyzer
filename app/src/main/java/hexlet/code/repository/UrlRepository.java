@@ -66,7 +66,7 @@ public class UrlRepository extends BaseRepository {
     }
 
     public static List<Url> getEntities() throws SQLException {
-        var sql = "SELECT * FROM cars";
+        var sql = "SELECT * FROM urls";
         try (var conn = dataSource.getConnection();
             var stmt = conn.prepareStatement(sql)) {
             var resultSet = stmt.executeQuery();

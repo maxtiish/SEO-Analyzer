@@ -4,6 +4,7 @@
 @param UrlsPage page
 
 @template.layout.page(
+page = page,
 content = @`
     <main>
         <h1>Все посты</h1>

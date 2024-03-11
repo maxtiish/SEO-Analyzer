@@ -15,7 +15,7 @@
 <body>
 <div class="mx-auto p-4 py-md-5">
     <main>
-        <h1> Hello, world!</h1>
+        <h1>Analyzer</h1>
         <div>
             <input id="url-input" autofocus type="text" required name="url"
                    aria-label="url" class="form-control w-100" placeholder="cсылка"
