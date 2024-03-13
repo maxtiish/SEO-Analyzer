@@ -29,6 +29,7 @@ dependencies {
     implementation("com.konghq:unirest-java-core:4.2.4")
     implementation("com.konghq:unirest-java-bom:4.2.4")
     implementation("org.jsoup:jsoup:1.17.2")
+    implementation("com.mashape.unirest:unirest-java:1.3.1")
 
     testImplementation("org.assertj:assertj-core:3.24.2")
     testImplementation(platform("org.junit:junit-bom:5.10.0"))

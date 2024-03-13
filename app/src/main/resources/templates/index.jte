@@ -22,6 +22,9 @@
                    autocomplete="off">
             <label for="url-input">Ссылка</label>
         </div>
+        <div>
+            <button type="submit">Проверить</button>
+        </div>
     </main>
 </div>
 </body>
