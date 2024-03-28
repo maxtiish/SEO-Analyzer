@@ -13,8 +13,8 @@ import java.util.ArrayList;
 
 public class UrlCheckRepository extends BaseRepository {
     public static void save(UrlCheck check) throws SQLException {
-        String sql = "INSERT INTO url_checks " +
-                "(url_id, status_code, h1, title, description, created_at) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO url_checks "
+                + "(url_id, status_code, h1, title, description, created_at) VALUES (?, ?, ?, ?, ?, ?)";
         var createdAt = new Timestamp(System.currentTimeMillis());
 
         try (var conn = dataSource.getConnection();
@@ -41,14 +41,14 @@ public class UrlCheckRepository extends BaseRepository {
         String sql = "SELECT * FROM url_checks WHERE url_id = ?";
 
         try (var conn = dataSource.getConnection();
-        var stmt = conn.prepareStatement(sql)) {
+            var stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, urlId);
             var checks = stmt.executeQuery();
             var result = new ArrayList<UrlCheck>();
 
-            while(checks.next()) {
+            while (checks.next()) {
                 var id = checks.getLong("id");
-                var statusCode = checks.getInt("status_code") ;
+                var statusCode = checks.getInt("status_code");
                 var title = checks.getString("title");
                 var h1 = checks.getString("h1");
                 var desc = checks.getString("description");
@@ -66,13 +66,13 @@ public class UrlCheckRepository extends BaseRepository {
         String sql = "SELECT * FROM url_checks WHERE url_id = ? ORDER BY created_at DESC LIMIT 1";
 
         try (var conn = dataSource.getConnection();
-        var stmt = conn.prepareStatement(sql)) {
+            var stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, urlId);
             var result = stmt.executeQuery();
 
-            if(result.next()) {
+            if (result.next()) {
                 var id = result.getLong("id");
-                var statusCode = result.getInt("status_code") ;
+                var statusCode = result.getInt("status_code");
                 var title = result.getString("title");
                 var h1 = result.getString("h1");
                 var desc = result.getString("description");
@@ -95,10 +95,10 @@ public class UrlCheckRepository extends BaseRepository {
             var checks = stmt.executeQuery();
             var result = new LinkedHashMap<Long, UrlCheck>();
 
-            while(checks.next()) {
+            while (checks.next()) {
                 var id = checks.getLong("id");
                 var urlId = checks.getLong("url_id");
-                var statusCode = checks.getInt("status_code") ;
+                var statusCode = checks.getInt("status_code");
                 var title = checks.getString("title");
                 var h1 = checks.getString("h1");
                 var desc = checks.getString("description");
