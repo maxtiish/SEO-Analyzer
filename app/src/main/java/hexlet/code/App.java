@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import hexlet.code.controller.UrlController;
 import hexlet.code.repository.BaseRepository;
+import hexlet.code.util.NamedRoutes;
 import io.javalin.Javalin;
 
 import java.io.BufferedReader;
@@ -77,10 +78,11 @@ public class App {
 
         JavalinJte.init(createTemplateEngine());
 
-        app.get("/", UrlController::index);
-        app.post("/urls", UrlController::create);
-        app.get("/urls", UrlController::showUrls);
-        app.get("/urls/{id}", UrlController::showUrl);
+        app.get(NamedRoutes.rootPath(), UrlController::index);
+        app.post(NamedRoutes.urlsPath(), UrlController::create);
+        app.get(NamedRoutes.urlsPath(), UrlController::showUrls);
+        app.get(NamedRoutes.urlPath("{id}"), UrlController::showUrl);
+        app.post(NamedRoutes.urlCheckPath("{id}"), UrlController::check);
 
         return app;
     }

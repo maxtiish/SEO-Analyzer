@@ -1,5 +1,6 @@
 @import hexlet.code.App
 @import hexlet.code.dto.UrlsPage
+@import hexlet.code.util.NamedRoutes
 
 @param UrlsPage page
 
@@ -7,14 +8,40 @@
 page = page,
 content = @`
     <main>
-        <h1>Все посты</h1>
-        @if(!page.getUrls().isEmpty())
-            @for(var url : page.getUrls())
-                <h2>${url.getId()}</h2>
-                <h2>${url.getName()}</h2>
-                <h2>${App.getFormattedTime(url.getCreatedAt())}</h2>
+        <h1>Все сайты</h1>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Имя</th>
+                <th>Последняя проверка</th>
+                <th>Код ответа</th>
+            </tr>
+            </thead>
+            @if(!page.getUrls().isEmpty())
+            <tbody>
+            @for (var url : page.getUrls())
+                <tr>
+                    <td>${url.getId()}</td>
+
+                    <td><a href="${NamedRoutes.urlPath(url.getId())}">
+                        ${url.getName()}</a>
+                    </td>
+
+                    <td>@if(page.getChecks().get(url.getId()) != null)
+                        ${App.getFormattedTime(page.getChecks().get(url.getId()).getCreatedAt())}
+                        @endif
+                    </td>
+
+                    <td>@if(page.getChecks().get(url.getId()) != null)
+                            ${page.getChecks().get(url.getId()).getStatusCode()}
+                        @endif
+                    </td>
+                </tr>
             @endfor
-        @endif
+            </tbody>
+            @endif
+        </table>
     </main>
     `
 )

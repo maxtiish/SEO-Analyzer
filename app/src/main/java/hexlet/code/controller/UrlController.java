@@ -4,9 +4,16 @@ import hexlet.code.dto.BasePage;
 import hexlet.code.dto.UrlPage;
 import hexlet.code.dto.UrlsPage;
 import hexlet.code.model.Url;
+import hexlet.code.model.UrlCheck;
+import hexlet.code.repository.UrlCheckRepository;
 import hexlet.code.repository.UrlRepository;
+import hexlet.code.util.NamedRoutes;
 import io.javalin.http.Context;
 import io.javalin.http.NotFoundResponse;
+import kong.unirest.core.HttpResponse;
+import kong.unirest.core.Unirest;
+import kong.unirest.core.UnirestException;
+import org.jsoup.Jsoup;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -56,14 +63,52 @@ public class UrlController {
         var url = UrlRepository.find(id)
                 .orElseThrow(() -> new NotFoundResponse("Url not found"));
 
-        var page = new UrlPage(url);
+        var checks = UrlCheckRepository.getChecks(id);
+
+        var page = new UrlPage(url, checks);
         ctx.render("urls/show.jte", Collections.singletonMap("page", page));
     }
 
     public static void showUrls(Context ctx) throws SQLException {
         var urls = UrlRepository.getEntities();
-        var page = new UrlsPage(urls);
+        var checks = UrlCheckRepository.getAllChecks();
+        var page = new UrlsPage(urls, checks);
         ctx.render("urls/index.jte", Collections.singletonMap("page", page));
 
     }
+
+    public static void check(Context ctx) throws SQLException {
+        var id = ctx.formParamAsClass("id", Long.class).get();
+        var url = UrlRepository.find(id)
+                .orElseThrow(() -> new NotFoundResponse("Id " + id + " not found"));
+        String name = url.getName();
+
+        try {
+            HttpResponse<String> resp = Unirest.get(name).asString();
+            var statusCode = resp.getStatus();
+
+            var parse = Jsoup.parse(resp.getBody());
+
+            var title = parse.title();
+
+            var firstEl = parse.selectFirst("h1");
+            var h1 = (firstEl == null ? null : firstEl.ownText());
+
+            var forDesc = parse.selectFirst("meta[name=description]");
+            var desc = (forDesc == null ? null : forDesc.attr("content"));
+
+            var check = new UrlCheck(statusCode, title, h1, desc, id);
+            UrlCheckRepository.save(check);
+
+            ctx.redirect(NamedRoutes.urlPath(id));
+        } catch (UnirestException e) {
+            ctx.redirect(NamedRoutes.urlPath(id));
+        }
+    }
 }
+
+    /*    Title (не повторяет h1);
+    H1 (не более одного на странице);
+    Description (уникален для каждой страницы);
+    Отсутствие ошибок 404 и 500
+    */

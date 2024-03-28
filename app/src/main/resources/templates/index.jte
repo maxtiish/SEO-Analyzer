@@ -1,4 +1,5 @@
 @import hexlet.code.dto.BasePage
+@import hexlet.code.util.NamedRoutes
 
 @param BasePage page
 
@@ -16,6 +17,7 @@
 <div class="mx-auto p-4 py-md-5">
     <main>
         <h1>Analyzer</h1>
+        <form action="${NamedRoutes.urlsPath()}" method="post" class="rss-form text-body">
         <div>
             <input id="url-input" autofocus type="text" required name="url"
                    aria-label="url" class="form-control w-100" placeholder="cсылка"
@@ -25,6 +27,7 @@
         <div>
             <button type="submit">Проверить</button>
         </div>
+        </form>
     </main>
 </div>
 </body>
