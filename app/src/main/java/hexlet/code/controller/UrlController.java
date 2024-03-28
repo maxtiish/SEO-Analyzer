@@ -78,7 +78,7 @@ public class UrlController {
     }
 
     public static void check(Context ctx) throws SQLException {
-        var id = ctx.formParamAsClass("id", Long.class).get();
+        var id = ctx.pathParamAsClass("id", Long.class).get();
         var url = UrlRepository.find(id)
                 .orElseThrow(() -> new NotFoundResponse("Id " + id + " not found"));
         String name = url.getName();
@@ -86,22 +86,21 @@ public class UrlController {
         try {
             HttpResponse<String> resp = Unirest.get(name).asString();
             var statusCode = resp.getStatus();
-
             var parse = Jsoup.parse(resp.getBody());
-
             var title = parse.title();
-
             var firstEl = parse.selectFirst("h1");
             var h1 = (firstEl == null ? null : firstEl.ownText());
-
             var forDesc = parse.selectFirst("meta[name=description]");
             var desc = (forDesc == null ? null : forDesc.attr("content"));
-
             var check = new UrlCheck(statusCode, title, h1, desc, id);
-            UrlCheckRepository.save(check);
 
+            UrlCheckRepository.save(check);
+            ctx.sessionAttribute("flash", "Проверка прошла успешно");
+            ctx.sessionAttribute("flash-type", "added");
             ctx.redirect(NamedRoutes.urlPath(id));
         } catch (UnirestException e) {
+            ctx.sessionAttribute("flash", "Не удалось проверить");
+            ctx.sessionAttribute("flash-type", "error");
             ctx.redirect(NamedRoutes.urlPath(id));
         }
     }
