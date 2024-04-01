@@ -1,4 +1,3 @@
-@import hexlet.code.App
 @import hexlet.code.dto.UrlsPage
 @import hexlet.code.util.NamedRoutes
 @import hexlet.code.util.FormattedTime
