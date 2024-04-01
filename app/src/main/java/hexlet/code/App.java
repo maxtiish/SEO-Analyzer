@@ -40,11 +40,6 @@ public class App {
         }
     }
 
-    public static String getFormattedTime(Timestamp time) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        return dtf.format(time.toLocalDateTime());
-    }
-
     private static TemplateEngine createTemplateEngine() {
         ClassLoader classLoader = App.class.getClassLoader();
         ResourceCodeResolver codeResolver = new ResourceCodeResolver("templates", classLoader);
@@ -68,6 +63,8 @@ public class App {
         try (var connection = dataSource.getConnection();
              var statement = connection.createStatement()) {
             statement.execute(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         BaseRepository.dataSource = dataSource;
@@ -75,6 +72,10 @@ public class App {
         var app = Javalin.create(config -> {
             config.bundledPlugins.enableDevLogging();
             config.fileRenderer(new JavalinJte(createTemplateEngine()));
+        });
+
+        app.before(ctx -> {
+            ctx.contentType("text/html; charset=utf-8");
         });
 
         app.get(NamedRoutes.rootPath(), UrlController::index);

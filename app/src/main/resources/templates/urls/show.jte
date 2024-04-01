@@ -1,6 +1,7 @@
 @import hexlet.code.App
 @import hexlet.code.dto.UrlPage
 @import hexlet.code.util.NamedRoutes
+@import hexlet.code.util.FormattedTime
 
 @param UrlPage page
 
@@ -10,7 +11,7 @@ content = @`
         <h1>Название сайта: ${page.getUrl().getName()}</h1>
         <p>ID : ${page.getUrl().getId()}</p>
         <p>Имя : ${page.getUrl().getName()}</p>
-        <p>Дата создания : ${App.getFormattedTime(page.getUrl().getCreatedAt())}</p>
+        <p>Дата создания : ${FormattedTime.get(page.getUrl().getCreatedAt())}</p>
 
         <h2>Проверки</h2>
 
@@ -22,9 +23,11 @@ content = @`
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Имя</th>
-                <th>Последняя проверка</th>
                 <th>Код ответа</th>
+                <th>title</th>
+                <th>h1</th>
+                <th>description</th>
+                <th>Последняя проверка</th>
             </tr>
             </thead>
             @if(!page.getChecks().isEmpty())
@@ -36,7 +39,7 @@ content = @`
                     <td>${check.getTitle()}</td>
                     <td>${check.getH1()}</td>
                     <td>${check.getDescription()}</td>
-                    <td>${App.getFormattedTime(check.getCreatedAt())}</td>
+                    <td>${FormattedTime.get(check.getCreatedAt())}</td>
                 </tr>
             @endfor
             </tbody>
