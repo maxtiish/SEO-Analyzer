@@ -86,7 +86,7 @@ public class AppTest {
             assertThat(response.code()).isEqualTo(200);
             assertThat(response.body().string().contains("https://example.com"));
             assertThat(getEntities().size()).isEqualTo(1);
-            assertThat(getEntities().get(0).getName().contains("https://example.com"));
+            assertThat(getEntities().get(0).getName()).isEqualTo("https://example.com");
         });
     }
 
