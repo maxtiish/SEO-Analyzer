@@ -16,6 +16,9 @@ content = @`
     <title>SEO-Analyzer</title>
 </head>
 <body>
+@if(page.getFlash() != null)
+    <p>${page.getFlash()}</p>
+@endif
 <div class="mx-auto p-4 py-md-5">
     <main>
         <h1>Analyzer</h1>
