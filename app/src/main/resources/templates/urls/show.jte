@@ -5,11 +5,9 @@
 @param UrlPage page
 
 @template.layout.page(
+page = page,
 content = @`
     <main>
-        @if(page.getFlash() != null)
-            <p>${page.getFlash()}</p>
-        @endif
         <h1>Название сайта: ${page.getUrl().getName()}</h1>
         <p>ID : ${page.getUrl().getId()}</p>
         <p>Имя : ${page.getUrl().getName()}</p>

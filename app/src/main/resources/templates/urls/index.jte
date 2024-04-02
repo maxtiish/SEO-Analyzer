@@ -1,8 +1,10 @@
 @import hexlet.code.dto.UrlsPage
+@import hexlet.code.dto.BasePage
 @import hexlet.code.util.NamedRoutes
 @import hexlet.code.util.FormattedTime
 
 @param UrlsPage page
+@param BasePage page = null
 
 @template.layout.page(
 page = page,
