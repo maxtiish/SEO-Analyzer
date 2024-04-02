@@ -11,6 +11,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+
+import static hexlet.code.repository.UrlRepository.getEntities;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
@@ -21,7 +23,8 @@ import java.sql.SQLException;
 public class AppTest {
 
     private static MockWebServer mockWebServer;
-    private final String url1 = "https://example.com";
+    private final String realUrl = "https://example.com";
+    private final String fakeUrl = "hexlet.io";
     Javalin app;
 
     @BeforeAll
@@ -67,11 +70,33 @@ public class AppTest {
     @Test
     public void testUrlPage() {
         JavalinTest.test(app, (server, client) -> {
-            var url = new Url(url1);
+            var url = new Url(realUrl);
             UrlRepository.save(url);
             var response = client.get("/urls/" + url.getId());
             assertThat(response.code()).isEqualTo(200);
             assertThat(response.body().string()).contains("https://example.com");
+        });
+    }
+
+    @Test
+    public void testUrl() {
+        JavalinTest.test(app, (server, client) -> {
+            String body = "url=" + realUrl;
+            var response = client.post("/urls", body);
+            assertThat(response.code()).isEqualTo(200);
+            assertThat(response.body().string().contains("https://example.com"));
+            assertThat(getEntities().size()).isEqualTo(1);
+            assertThat(getEntities().get(0).getName().contains("https://example.com"));
+        });
+    }
+
+    @Test
+    public void testInvalidUrl() {
+        JavalinTest.test(app, (server, client) -> {
+            String body = "url=" + fakeUrl;
+            var response = client.post("/urls", body);
+            assertThat(response.code()).isEqualTo(200);
+            assertThat(getEntities().size()).isEqualTo(0);
         });
     }
 

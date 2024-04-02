@@ -12,13 +12,22 @@
     <title>Analyzer</title>
 </head>
 <body>
-<p>
-    <a href="/">Main page</a>
+<ul>
+    <li>
+        <a href="/">Main page</a>
+    </li>
+    <li>
     <a href="/urls">Urls</a>
-</p>
+    </li>
+</ul>
+
 @if(page != null && page.getFlash() != null)
     <p>${page.getFlash()}</p>
 @endif
-${content}
+
+<div>
+    ${content}
+</div>
+
 </body>
 </html>

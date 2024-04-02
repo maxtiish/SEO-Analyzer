@@ -7,7 +7,6 @@
 @template.layout.page(
 page = page,
 content = @`
-    <main>
         <h1>Все сайты</h1>
         <table>
             <thead>
@@ -42,6 +41,5 @@ content = @`
             </tbody>
             @endif
         </table>
-    </main>
     `
 )

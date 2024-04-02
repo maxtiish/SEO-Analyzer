@@ -7,7 +7,6 @@
 @template.layout.page(
 page = page,
 content = @`
-    <main>
         <h1>Название сайта: ${page.getUrl().getName()}</h1>
         <p>ID : ${page.getUrl().getId()}</p>
         <p>Имя : ${page.getUrl().getName()}</p>
@@ -45,6 +44,5 @@ content = @`
             </tbody>
             @endif
         </table>
-    </main>
 `
 )
