@@ -10,22 +10,33 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Analyzer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+          crossorigin="anonymous">
 </head>
 <body>
-<ul>
-    <li>
-        <a href="/">Main page</a>
-    </li>
-    <li>
-    <a href="/urls">Urls</a>
-    </li>
-</ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Main page</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/urls">Urls</a>
+
+            </li>
+        </ul>
+    </div>
+</nav>
 
 @if(page != null && page.getFlash() != null)
-    <p>${page.getFlash()}</p>
+    <div class="alert alert-${page.getFlashType()}" role="alert">
+        ${page.getFlash()}
+    </div>
 @endif
 
-<div>
+<div class="mx-auto p-4 py-md-5">
     ${content}
 </div>
 

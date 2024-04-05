@@ -7,18 +7,27 @@
 @template.layout.page(
 page = page,
 content = @`
-        <h1>Название сайта: ${page.getUrl().getName()}</h1>
-        <p>ID : ${page.getUrl().getId()}</p>
-        <p>Имя : ${page.getUrl().getName()}</p>
-        <p>Дата создания : ${FormattedTime.get(page.getUrl().getCreatedAt())}</p>
+        <div class="mb-3">
+            <h1>Название сайта: ${page.getUrl().getName()}</h1>
+        </div>
+        <div class="mb-3">
+            ID : ${page.getUrl().getId()}
+        </div>
+        <div class="mb-3">
+            Имя : ${page.getUrl().getName()}
+        </div>
+        <div class="mb-3">
+            Дата создания : ${FormattedTime.get(page.getUrl().getCreatedAt())}
+        </div>
 
         <h2>Проверки</h2>
+        <div class="mx-auto p-4 py-md-5">
+            <form method="post" action="${NamedRoutes.urlCheckPath(page.getUrl().getId())}">
+                <button type="submit" class="btn btn-primary">Запустить проверку</button>
+            </form>
+        </div>
 
-        <form method="post" action="${NamedRoutes.urlCheckPath(page.getUrl().getId())}">
-            <button type="submit" class="btn btn-primary">Запустить проверку</button>
-        </form>
-
-        <table>
+        <table class="table table-striped">
             <thead>
             <tr>
                 <th>ID</th>

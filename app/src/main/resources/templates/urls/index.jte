@@ -8,7 +8,7 @@
 page = page,
 content = @`
         <h1>Все сайты</h1>
-        <table>
+        <table class="table table-striped">
             <thead>
             <tr>
                 <th>ID</th>

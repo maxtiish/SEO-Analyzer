@@ -36,7 +36,7 @@ public class UrlController {
             addedUrl = new URL(url);
         } catch (MalformedURLException e) {
             ctx.sessionAttribute("flash", "Некорректный URL");
-            ctx.sessionAttribute("flash-type", "incorrect");
+            ctx.sessionAttribute("flash-type", "danger");
             ctx.redirect("/");
         }
 
@@ -49,10 +49,10 @@ public class UrlController {
             if (UrlRepository.findByName(host).isEmpty()) {
                 UrlRepository.save(newUrl);
                 ctx.sessionAttribute("flash", "Страница успешно добавлена");
-                ctx.sessionAttribute("flash-type", "added");
+                ctx.sessionAttribute("flash-type", "success");
             } else {
                 ctx.sessionAttribute("flash", "Страница уже существует");
-                ctx.sessionAttribute("flash-type", "error");
+                ctx.sessionAttribute("flash-type", "danger");
             }
             ctx.redirect("/urls");
         }
@@ -96,11 +96,11 @@ public class UrlController {
 
             UrlCheckRepository.save(check);
             ctx.sessionAttribute("flash", "Проверка прошла успешно");
-            ctx.sessionAttribute("flash-type", "added");
+            ctx.sessionAttribute("flash-type", "success");
             ctx.redirect(NamedRoutes.urlPath(id));
         } catch (UnirestException e) {
             ctx.sessionAttribute("flash", "Не удалось проверить");
-            ctx.sessionAttribute("flash-type", "error");
+            ctx.sessionAttribute("flash-type", "danger");
             ctx.redirect(NamedRoutes.urlPath(id));
         }
     }
