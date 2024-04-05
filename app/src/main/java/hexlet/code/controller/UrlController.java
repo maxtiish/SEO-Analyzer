@@ -24,7 +24,7 @@ public class UrlController {
     public static void index(Context ctx) {
         var page = new BasePage();
         page.setFlash(ctx.consumeSessionAttribute("flash"));
-        page.setFlashType(ctx.consumeSessionAttribute("flash-type"));
+        page.setFlashType(ctx.consumeSessionAttribute("type"));
         ctx.render("index.jte", Collections.singletonMap("page", page));
     }
 
@@ -36,7 +36,7 @@ public class UrlController {
             addedUrl = new URL(url);
         } catch (MalformedURLException e) {
             ctx.sessionAttribute("flash", "Некорректный URL");
-            ctx.sessionAttribute("flash-type", "danger");
+            ctx.sessionAttribute("type", "danger");
             ctx.redirect("/");
         }
 
@@ -49,10 +49,10 @@ public class UrlController {
             if (UrlRepository.findByName(host).isEmpty()) {
                 UrlRepository.save(newUrl);
                 ctx.sessionAttribute("flash", "Страница успешно добавлена");
-                ctx.sessionAttribute("flash-type", "success");
+                ctx.sessionAttribute("type", "success");
             } else {
                 ctx.sessionAttribute("flash", "Страница уже существует");
-                ctx.sessionAttribute("flash-type", "danger");
+                ctx.sessionAttribute("type", "danger");
             }
             ctx.redirect("/urls");
         }
@@ -73,6 +73,8 @@ public class UrlController {
         var urls = UrlRepository.getEntities();
         var checks = UrlCheckRepository.getAllChecks();
         var page = new UrlsPage(urls, checks);
+        page.setFlash(ctx.consumeSessionAttribute("flash"));
+        page.setFlashType(ctx.consumeSessionAttribute("type"));
         ctx.render("urls/index.jte", Collections.singletonMap("page", page));
 
     }
@@ -96,11 +98,11 @@ public class UrlController {
 
             UrlCheckRepository.save(check);
             ctx.sessionAttribute("flash", "Проверка прошла успешно");
-            ctx.sessionAttribute("flash-type", "success");
+            ctx.sessionAttribute("type", "success");
             ctx.redirect(NamedRoutes.urlPath(id));
         } catch (UnirestException e) {
             ctx.sessionAttribute("flash", "Не удалось проверить");
-            ctx.sessionAttribute("flash-type", "danger");
+            ctx.sessionAttribute("type", "danger");
             ctx.redirect(NamedRoutes.urlPath(id));
         }
     }
