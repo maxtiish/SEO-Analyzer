@@ -64,8 +64,10 @@ public class UrlController {
                 .orElseThrow(() -> new NotFoundResponse("Url not found"));
 
         var checks = UrlCheckRepository.getChecks(id);
-
         var page = new UrlPage(url, checks);
+
+        page.setFlash(ctx.consumeSessionAttribute("flash"));
+        page.setFlashType(ctx.consumeSessionAttribute("type"));
         ctx.render("urls/show.jte", Collections.singletonMap("page", page));
     }
 
